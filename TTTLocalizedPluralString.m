@@ -25,12 +25,12 @@
 // Source: Unicode Common Locale Data Repository Plural Rules
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 
-static NSString * const kTTTZeroPluralRule = @"zero";
-static NSString * const kTTTOnePluralRule = @"one";
-static NSString * const kTTTTwoPluralRule = @"two";
-static NSString * const kTTTFewPluralRule = @"few";
-static NSString * const kTTTManyPluralRule = @"many";
-static NSString * const kTTTOtherPluralRule = @"other";
+NSString * const kTTTZeroPluralRule = @"zero";
+NSString * const kTTTOnePluralRule = @"one";
+NSString * const kTTTTwoPluralRule = @"two";
+NSString * const kTTTFewPluralRule = @"few";
+NSString * const kTTTManyPluralRule = @"many";
+NSString * const kTTTOtherPluralRule = @"other";
 
 static NSString * TTTArabicPluralRuleForCount(NSUInteger count) {
     switch (count) {
@@ -479,12 +479,7 @@ static NSString * TTTVietnamesePluralRuleForCount(NSUInteger count) {
     return kTTTOtherPluralRule;
 }
 
-NSString * TTTLocalizedPluralStringKeyForCountAndSingularNoun(NSUInteger count, NSString *singular) {
-    NSString *languageCode = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
-    return TTTLocalizedPluralStringKeyForCountAndSingularNounForLanguage(count, singular, languageCode);
-}
-
-NSString * TTTLocalizedPluralStringKeyForCountAndSingularNounForLanguage(NSUInteger count, NSString *singular, NSString *languageCode) {
+NSString * TTTPluralRuleForCountInLanguage(NSUInteger count, NSString* languageCode) {
     NSString *pluralRule = nil;
 
     // Because -hasPrefix is being used here, any three-letter ISO 639-2/3 codes must come before two-letter ISO 639-1 codes in order to prevent, for instance, Konkani (kok) from having Korean (ko) pluralization applied
@@ -567,5 +562,15 @@ NSString * TTTLocalizedPluralStringKeyForCountAndSingularNounForLanguage(NSUInte
         return nil;
     }
 
+    return pluralRule;
+}
+
+NSString * TTTLocalizedPluralStringKeyForCountAndSingularNoun(NSUInteger count, NSString *singular) {
+    NSString *languageCode = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+    return TTTLocalizedPluralStringKeyForCountAndSingularNounForLanguage(count, singular, languageCode);
+}
+
+NSString * TTTLocalizedPluralStringKeyForCountAndSingularNounForLanguage(NSUInteger count, NSString *singular, NSString *languageCode) {
+    NSString *pluralRule = TTTPluralRuleForCountInLanguage(count, languageCode);
     return [NSString stringWithFormat:@"%%d %@ (plural rule: %@)", singular, pluralRule];
 }
