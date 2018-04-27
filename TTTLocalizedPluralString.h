@@ -48,3 +48,7 @@ extern NSString * TTTPluralRuleForCountInLanguage(NSUInteger count, NSString* la
 
 #define TTTLocalizedPluralStringWithDefaultValue(count, singular, tbl, bundle, val, comment) \
 [NSString stringWithFormat:[bundle localizedStringForKey:TTTLocalizedPluralStringKeyForCountAndSingularNoun(count, singular) value:(val) table:(tbl)], count]
+
+@interface TTTFoobar: NSObject
+@end
+

@@ -574,3 +574,6 @@ NSString * TTTLocalizedPluralStringKeyForCountAndSingularNounForLanguage(NSUInte
     NSString *pluralRule = TTTPluralRuleForCountInLanguage(count, languageCode);
     return [NSString stringWithFormat:@"%%d %@ (plural rule: %@)", singular, pluralRule];
 }
+
+@implementation TTTFoobar
+@end
